@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Business;
 
 namespace Forms
 {
@@ -18,6 +19,7 @@ namespace Forms
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Window());
+            WorkoutService.Instance.SaveChanges();
         }
     }
 }

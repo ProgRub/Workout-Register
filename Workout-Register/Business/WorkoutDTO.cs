@@ -8,7 +8,7 @@ namespace Business
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }
-		public ICollection<DateTime> WorkoutDateTimes { get; set; }
+		public ISet<DateTime> WorkoutDateTimes { get; set; }
 
 		internal static WorkoutDTO ConvertWorkoutToDTO(Workout workout)
 		{

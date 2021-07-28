@@ -42,7 +42,7 @@ namespace Forms
 		{
 			if (ComboBoxWorkouts.Text == "New Workout")
 			{
-				var newWorkout = new WorkoutDTO{Id=ComboBoxWorkouts.Items.Count,Name = TextBoxNewWorkout.Text,WorkoutDateTimes = new List<DateTime>()};
+				var newWorkout = new WorkoutDTO{Id=ComboBoxWorkouts.Items.Count,Name = TextBoxNewWorkout.Text,WorkoutDateTimes = new HashSet<DateTime>()};
 				WorkoutService.Instance.CreateNewWorkout(newWorkout,DateTimePickerCompletionTime.Value.TimeOfDay);
 				_workouts.Add(newWorkout);
 				ComboBoxWorkouts.Items.Insert(ComboBoxWorkouts.Items.Count-1,$"{newWorkout.Id} - {newWorkout.Name}");

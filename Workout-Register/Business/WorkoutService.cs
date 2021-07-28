@@ -11,8 +11,8 @@ namespace Business
 {
 	public class WorkoutService
 	{
-		private IWorkoutRepository _workoutRepository;
-		private ICollection<WorkoutDTO> _addedWorkouts=new List<WorkoutDTO>();
+		private readonly IWorkoutRepository _workoutRepository;
+		private readonly ICollection<WorkoutDTO> _addedWorkouts=new List<WorkoutDTO>();
 
 		private WorkoutService()
 		{
@@ -29,12 +29,11 @@ namespace Business
 
 		public void AddWorkoutTime(WorkoutDTO workout, TimeSpan time)
 		{
-			try
+			if (_workoutRepository.GetById(workout.Id) != null)
 			{
-				var workoutInDB = _workoutRepository.GetById(workout.Id);
-				workoutInDB.WorkoutDateTimes.Add(DateTime.Today.Date.Add(time));
+				_workoutRepository.AddTimeToWorkoutById(workout.Id,time);
 			}
-			catch (NullReferenceException)
+			else
 			{
 				_addedWorkouts.First(e=>e.Name==workout.Name).WorkoutDateTimes.Add(DateTime.Today.Date.Add(time));
 			}
@@ -42,7 +41,7 @@ namespace Business
 
 		public void CreateNewWorkout(WorkoutDTO newWorkout,TimeSpan time)
 		{
-			_addedWorkouts.Add(new WorkoutDTO{Name = newWorkout.Name,WorkoutDateTimes = new List<DateTime>()});
+			_addedWorkouts.Add(new WorkoutDTO{Name = newWorkout.Name,WorkoutDateTimes = new HashSet<DateTime>()});
 			AddWorkoutTime(newWorkout,time);
 		}
 

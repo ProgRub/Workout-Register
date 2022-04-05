@@ -27,22 +27,22 @@ namespace Business
 			return _workoutRepository.GetAll().Select(WorkoutDTO.ConvertWorkoutToDTO);
 		}
 
-		public void AddWorkoutTime(WorkoutDTO workout, TimeSpan time)
+		public void AddWorkoutTime(WorkoutDTO workout, DateTime dateTime)
 		{
 			if (_workoutRepository.GetById(workout.Id) != null)
 			{
-				_workoutRepository.AddTimeToWorkoutById(workout.Id,time);
+				_workoutRepository.AddTimeToWorkoutById(workout.Id,dateTime);
 			}
 			else
 			{
-				_addedWorkouts.First(e=>e.Name==workout.Name).WorkoutDateTimes.Add(DateTime.Today.Date.Add(time));
+				_addedWorkouts.First(e=>e.Name==workout.Name).WorkoutDateTimes.Add(dateTime);
 			}
 		}
 
-		public void CreateNewWorkout(WorkoutDTO newWorkout,TimeSpan time)
+		public void CreateNewWorkout(WorkoutDTO newWorkout,DateTime dateTime)
 		{
 			_addedWorkouts.Add(new WorkoutDTO{Name = newWorkout.Name,WorkoutDateTimes = new HashSet<DateTime>()});
-			AddWorkoutTime(newWorkout,time);
+			AddWorkoutTime(newWorkout,dateTime);
 		}
 
 		public void SaveChanges()

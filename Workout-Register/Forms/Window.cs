@@ -19,6 +19,7 @@ namespace Forms
 		public Window()
 		{
 			InitializeComponent();
+			DateTimePickerDate.Value=DateTime.Today;
 		}
 
 		private void Window_Load(object sender, EventArgs e)
@@ -42,13 +43,21 @@ namespace Forms
 		{
 			if (ComboBoxWorkouts.Text == "New Workout")
 			{
-				var newWorkout = new WorkoutDTO{Id=ComboBoxWorkouts.Items.Count,Name = TextBoxNewWorkout.Text,WorkoutDateTimes = new HashSet<DateTime>()};
-				WorkoutService.Instance.CreateNewWorkout(newWorkout,DateTimePickerCompletionTime.Value.TimeOfDay);
+				var newWorkout = new WorkoutDTO
+				{
+					Id = ComboBoxWorkouts.Items.Count, Name = TextBoxNewWorkout.Text,
+					WorkoutDateTimes = new HashSet<DateTime>()
+				};
+				WorkoutService.Instance.CreateNewWorkout(newWorkout,
+					DateTimePickerDate.Value.Date.Add(DateTimePickerCompletionTime.Value.TimeOfDay));
 				_workouts.Add(newWorkout);
-				ComboBoxWorkouts.Items.Insert(ComboBoxWorkouts.Items.Count-1,$"{newWorkout.Id} - {newWorkout.Name}");
+				ComboBoxWorkouts.Items.Insert(ComboBoxWorkouts.Items.Count - 1, $"{newWorkout.Id} - {newWorkout.Name}");
 				return;
 			}
-			WorkoutService.Instance.AddWorkoutTime(_workouts.First(e=>e.Id.ToString()==ComboBoxWorkouts.Text.Split(" - ")[0]),DateTimePickerCompletionTime.Value.TimeOfDay);
+
+			WorkoutService.Instance.AddWorkoutTime(
+				_workouts.First(e => e.Id.ToString() == ComboBoxWorkouts.Text.Split(" - ")[0]),
+				DateTimePickerDate.Value.Date.Add(DateTimePickerCompletionTime.Value.TimeOfDay));
 		}
 	}
 }

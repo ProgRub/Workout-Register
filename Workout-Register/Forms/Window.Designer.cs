@@ -186,7 +186,6 @@ namespace Forms
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MinimumSize = new System.Drawing.Size(640, 155);
 			this.Name = "Window";
-			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
 			this.Text = "WorkoutRegister";
 			this.Load += new System.EventHandler(this.Window_Load);
 			this.tableLayoutPanel1.ResumeLayout(false);
